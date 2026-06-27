@@ -6,7 +6,7 @@ NAME=rnode
 DAEMON=/usr/sbin/$NAME
 PIDFILE="/var/run/$NAME.pid"
 
-[ -r /etc/default/rns ] && . /etc/default/rns
+[ -r /etc/default/rns-rs ] && . /etc/default/rns-rs
 
 start() {
 	printf "Starting $NAME: "
