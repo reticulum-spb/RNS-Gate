@@ -1,8 +1,8 @@
 #!/bin/sh
 #
-# Starts lxmd-rs
+# Starts nodepage-rs
 #
-NAME=lxmd-rs
+NAME=nodepage-rs
 DAEMON=/usr/bin/$NAME
 PIDFILE="/var/run/$NAME.pid"
 
@@ -16,7 +16,7 @@ start() {
 	echo "OK"
 
 	printf "Starting $NAME: "
-	start-stop-daemon -S -q -b -m -p $PIDFILE -c rns -x $DAEMON -- --rnsconfig $RETICULUM_CONFIG --config $LXMF_CONFIG
+	start-stop-daemon -S -q -b -m -p $PIDFILE -c rns -x $DAEMON -- --rnsconfig $RETICULUM_CONFIG --config $NODEPAGE_CONFIG
 	echo "OK"
 }
 stop() {
