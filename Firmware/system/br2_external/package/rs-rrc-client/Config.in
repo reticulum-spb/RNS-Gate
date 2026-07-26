@@ -1,0 +1,6 @@
+config BR2_PACKAGE_RS_RRC_CLIENT
+    bool "rsRRC-client"
+	help
+        Reusable asynchronous RRC client built on rsReticulum. It is intended for
+        interactive clients, services, and bots. It is the RRC transport/session layer
+        used by the adjacent `rsNomadNet` web client.
