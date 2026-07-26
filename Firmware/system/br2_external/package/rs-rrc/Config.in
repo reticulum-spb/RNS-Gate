@@ -1,0 +1,4 @@
+config BR2_PACKAGE_RS_RRC
+    bool "rsRRC"
+	help
+        Shared Rust implementation of the Reticulum Relay Chat (RRC) version 1 wire protocol.
