@@ -4,8 +4,8 @@
 #
 ################################################################################
 
-RS_LXMF_VERSION = 90e44916a403cfea2446aa945275f42233fd0169
-RS_LXMF_SITE = https://github.com/ratspeak/rsLXMF
+RS_LXMF_VERSION = 3cbd0b19c626d8ab1bb9aa00c61e12a08f786e44
+RS_LXMF_SITE = https://github.com/reticulum-spb/rsLXMF
 RS_LXMF_SITE_METHOD = git
 RS_LXMF_DEPENDENCIES = host-rustc rs-reticulum
 
@@ -31,11 +31,11 @@ RS_LXMF_CARGO_ENV = \
     PKG_CONFIG_SYSROOT_DIR="$(STAGING_DIR)" \
     PKG_CONFIG_LIBDIR="$(STAGING_DIR)/usr/lib/pkgconfig:$(STAGING_DIR)/usr/share/pkgconfig"
 
-define RS_RETICULUM_CREATE_SYMLINK
-    ln -sf $(RS_RETICULUM_DIR) $(@D)/../rsReticulum
+define RS_LXMF_CREATE_SYMLINK
+    ln -sfn $(@D) $(BUILD_DIR)/rsLXMF
 endef
 
-RS_LXMF_PRE_CONFIGURE_HOOKS += RS_RETICULUM_CREATE_SYMLINK
+RS_LXMF_POST_EXTRACT_HOOKS += RS_LXMF_CREATE_SYMLINK
 
 define RS_LXMF_BUILD_CMDS
     cd $(@D) && \

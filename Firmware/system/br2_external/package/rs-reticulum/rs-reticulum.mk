@@ -4,7 +4,7 @@
 #
 ################################################################################
 
-RS_RETICULUM_VERSION = dad9394c5f4f12e5006e6cde1183473b0fe7610b
+RS_RETICULUM_VERSION = 4c44537c3d4d9f1f019b7441d465a5e64be47db4
 RS_RETICULUM_SITE = https://github.com/reticulum-spb/rsReticulum
 RS_RETICULUM_SITE_METHOD = git
 RS_RETICULUM_DEPENDENCIES = host-rustc
@@ -12,6 +12,12 @@ RS_RETICULUM_DEPENDENCIES = host-rustc
 define RS_RETICULUM_USERS
 	rns -1 dialout -1 * - - - RNS User
 endef
+
+define RS_RETICULUM_CREATE_SYMLINK
+    ln -sfn $(@D) $(BUILD_DIR)/rsReticulum
+endef
+
+RS_RETICULUM_POST_EXTRACT_HOOKS += RS_RETICULUM_CREATE_SYMLINK
 
 RS_RETICULUM_CARGO_ENV = \
     CARGO_HOME=$(DL_DIR)/br-cargo-home \
