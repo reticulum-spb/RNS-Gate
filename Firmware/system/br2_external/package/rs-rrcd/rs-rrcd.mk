@@ -1,15 +1,15 @@
 ################################################################################
 #
-#  rsLXMF
+#  rsRRCD
 #
 ################################################################################
 
-RS_LXMF_VERSION = 3cbd0b19c626d8ab1bb9aa00c61e12a08f786e44
-RS_LXMF_SITE = https://github.com/reticulum-spb/rsLXMF
-RS_LXMF_SITE_METHOD = git
-RS_LXMF_DEPENDENCIES = host-rustc rs-reticulum
+RS_RRCD_VERSION = ab114e086cd9bf7d7b96fa780efcd393b05c7a17
+RS_RRCD_SITE = https://github.com/reticulum-spb/rsRRCD
+RS_RRCD_SITE_METHOD = git
+RS_RRCD_DEPENDENCIES = rs-rrc rs-reticulum
 
-RS_LXMF_CARGO_ENV = \
+RS_RRCD_CARGO_ENV = \
     CARGO_HOME=$(DL_DIR)/br-cargo-home \
     __CARGO_TEST_CHANNEL_OVERRIDE_DO_NOT_USE_THIS="nightly" \
     CARGO_UNSTABLE_HOST_CONFIG="true" \
@@ -31,19 +31,13 @@ RS_LXMF_CARGO_ENV = \
     PKG_CONFIG_SYSROOT_DIR="$(STAGING_DIR)" \
     PKG_CONFIG_LIBDIR="$(STAGING_DIR)/usr/lib/pkgconfig:$(STAGING_DIR)/usr/share/pkgconfig"
 
-define RS_LXMF_CREATE_SYMLINK
-    ln -sfn $(@D) $(BUILD_DIR)/rsLXMF
-endef
-
-RS_LXMF_POST_EXTRACT_HOOKS += RS_LXMF_CREATE_SYMLINK
-
-define RS_LXMF_BUILD_CMDS
+define RS_RRCD_BUILD_CMDS
     cd $(@D) && \
-    $(TARGET_MAKE_ENV) $(TARGET_CONFIGURE_OPTS) $(RS_LXMF_CARGO_ENV) cargo build --release
+    $(TARGET_MAKE_ENV) $(TARGET_CONFIGURE_OPTS) $(RS_RRCD_CARGO_ENV) cargo build --release
 endef
 
-define RS_LXMF_INSTALL_TARGET_CMDS
-    $(INSTALL) -D -m 0755 $(@D)/target/$(RUSTC_TARGET_NAME)/release/lxmd-rs $(TARGET_DIR)/usr/bin/lxmd-rs
+define RS_RRCD_INSTALL_TARGET_CMDS
+    $(INSTALL) -D -m 0755 $(@D)/target/$(RUSTC_TARGET_NAME)/release/rrcd-rs $(TARGET_DIR)/usr/bin/rrcd-rs
 endef
 
 $(eval $(generic-package))

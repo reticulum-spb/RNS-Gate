@@ -4,8 +4,8 @@
 #
 ################################################################################
 
-RS_NODEPAGE_VERSION = 01b8e2b9ed977725d517e297b9ac90565485978b
-RS_NODEPAGE_SITE = https://github.com/strijar/rsNodePage
+RS_NODEPAGE_VERSION = 02ce873d12400ecb4d1e08db4274314f2239dcfa
+RS_NODEPAGE_SITE = https://github.com/reticulum-spb/rsNodePage
 RS_NODEPAGE_SITE_METHOD = git
 RS_NODEPAGE_DEPENDENCIES = host-rustc rs-reticulum
 
@@ -30,12 +30,6 @@ RS_NODEPAGE_CARGO_ENV = \
     PKG_CONFIG="$(PKG_CONFIG_HOST_BINARY)" \
     PKG_CONFIG_SYSROOT_DIR="$(STAGING_DIR)" \
     PKG_CONFIG_LIBDIR="$(STAGING_DIR)/usr/lib/pkgconfig:$(STAGING_DIR)/usr/share/pkgconfig"
-
-define RS_RETICULUM_CREATE_SYMLINK
-    ln -sf $(RS_RETICULUM_DIR) $(@D)/../rsReticulum
-endef
-
-RS_NODEPAGE_PRE_CONFIGURE_HOOKS += RS_RETICULUM_CREATE_SYMLINK
 
 define RS_NODEPAGE_BUILD_CMDS
     cd $(@D) && \

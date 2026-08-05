@@ -1,0 +1,5 @@
+config BR2_PACKAGE_RS_NOMADNET
+    bool "rsNomadNet"
+    help
+        An local web client compatible with NomadNet, built on the
+        sibling rsReticulum, rsLXMF, rsRRC, and rsRRC-client projects.
