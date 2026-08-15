@@ -1,0 +1,112 @@
+name: Build image
+
+on:
+  workflow_dispatch:
+  push:
+    tags:
+      - '*' # Push events to every tag not containing /
+
+permissions:
+  contents: write
+
+env:
+  BUILD_CACHE_DIR: ${{ github.workspace }}/.cache/rns-gate-build
+  OUTPUT_DIR: ${{ github.workspace }}/Firmware/docker/output
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+
+      - name: Read Buildroot version
+        id: buildroot
+        run: |
+          release="$(grep -oE 'buildroot-[0-9.]+' Firmware/system/config.sh | head -1)"
+          test -n "${release}"
+          echo "release=${release}" >> "${GITHUB_OUTPUT}"
+
+      - name: Restore Buildroot downloads and ccache
+        uses: actions/cache@v5
+        with:
+          path: |
+            ${{ env.BUILD_CACHE_DIR }}/dl
+            ${{ env.BUILD_CACHE_DIR }}/.cache/ccache
+          key: >-
+            ${{ runner.os }}-${{ runner.arch }}-buildroot-${{ steps.buildroot.outputs.release }}-${{
+            hashFiles('Firmware/docker-build.sh', 'Firmware/docker/Dockerfile',
+            'Firmware/docker/*.sh',
+            'Firmware/system/br2_external/configs/gate_zero_defconfig',
+            'Firmware/system/br2_external/package/**/Config.in',
+            'Firmware/system/br2_external/package/**/*.mk',
+            'Firmware/system/br2_external/package/**/*.hash') }}
+          restore-keys: |
+            ${{ runner.os }}-${{ runner.arch }}-buildroot-${{ steps.buildroot.outputs.release }}-
+            ${{ runner.os }}-${{ runner.arch }}-buildroot-
+
+      # A clean Buildroot output is about 19 GB, while a standard hosted
+      # Ubuntu runner has only 14 GB. These SDKs are not used by this build.
+      - name: Free disk space
+        run: |
+          sudo rm -rf \
+            /opt/ghc \
+            /opt/hostedtoolcache/CodeQL \
+            /usr/local/.ghcup \
+            /usr/local/lib/android \
+            /usr/share/dotnet
+          df -h /
+
+      - name: Prepare Docker build volume
+        run: |
+          mkdir -p \
+            "${BUILD_CACHE_DIR}/dl" \
+            "${BUILD_CACHE_DIR}/.cache/ccache" \
+            "${OUTPUT_DIR}"
+
+          # The builder runs as uid/gid 1000, whereas the hosted runner uses
+          # another uid. Normalize ownership before mounting restored files.
+          sudo chown -R 1000:1000 "${BUILD_CACHE_DIR}" "${OUTPUT_DIR}"
+
+          docker volume create \
+            --driver local \
+            --opt type=none \
+            --opt "device=${BUILD_CACHE_DIR}" \
+            --opt o=bind \
+            rns-gate-build
+
+      - name: Build image in Docker
+        working-directory: Firmware
+        run: ./docker-build.sh
+
+      - name: Restore runner ownership
+        if: always()
+        run: |
+          sudo chown -R "$(id -u):$(id -g)" \
+            "${BUILD_CACHE_DIR}" \
+            "${OUTPUT_DIR}"
+
+      - name: Compress image
+        id: package
+        run: |
+          safe_ref="${GITHUB_REF_NAME//\//-}"
+          image_name="sdcard.${safe_ref}.img"
+          archive_name="${image_name}.zip"
+
+          mv "${OUTPUT_DIR}/sdcard.img" "${OUTPUT_DIR}/${image_name}"
+          (
+            cd "${OUTPUT_DIR}"
+            zip "${archive_name}" "${image_name}"
+          )
+
+          echo "archive=Firmware/docker/output/${archive_name}" >> "${GITHUB_OUTPUT}"
+
+      - name: Release
+        if: startsWith(github.ref, 'refs/tags/')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: ${{ steps.package.outputs.archive }}
