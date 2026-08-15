@@ -6,6 +6,10 @@ on:
     tags:
       - '*' # Push events to every tag not containing /
 
+concurrency:
+  group: build-image-${{ github.ref }}
+  cancel-in-progress: false
+
 permissions:
   contents: write
 
@@ -15,14 +19,15 @@ env:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
+    timeout-minutes: 360
     defaults:
       run:
         shell: bash
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
 
       - name: Read Buildroot version
         id: buildroot
@@ -32,7 +37,7 @@ jobs:
           echo "release=${release}" >> "${GITHUB_OUTPUT}"
 
       - name: Restore Buildroot downloads and ccache
-        uses: actions/cache@v5
+        uses: actions/cache@v6
         with:
           path: |
             ${{ env.BUILD_CACHE_DIR }}/dl
@@ -68,9 +73,8 @@ jobs:
             "${BUILD_CACHE_DIR}/.cache/ccache" \
             "${OUTPUT_DIR}"
 
-          # The builder runs as uid/gid 1000, whereas the hosted runner uses
-          # another uid. Normalize ownership before mounting restored files.
-          sudo chown -R 1000:1000 "${BUILD_CACHE_DIR}" "${OUTPUT_DIR}"
+          sudo chown -R 1000:1000 "${BUILD_CACHE_DIR}"
+          chmod 0777 "${OUTPUT_DIR}"
 
           docker volume create \
             --driver local \
@@ -87,7 +91,8 @@ jobs:
         if: always()
         run: |
           sudo chown -R "$(id -u):$(id -g)" \
-            "${BUILD_CACHE_DIR}" \
+            "${BUILD_CACHE_DIR}/dl" \
+            "${BUILD_CACHE_DIR}/.cache/ccache" \
             "${OUTPUT_DIR}"
 
       - name: Compress image
@@ -101,12 +106,33 @@ jobs:
           (
             cd "${OUTPUT_DIR}"
             zip "${archive_name}" "${image_name}"
+            test -s "${archive_name}"
+            zip -T "${archive_name}"
+            sha256sum "${archive_name}" > "${archive_name}.sha256"
           )
 
-          echo "archive=Firmware/docker/output/${archive_name}" >> "${GITHUB_OUTPUT}"
+          {
+            echo "archive=Firmware/docker/output/${archive_name}"
+            echo "checksum=Firmware/docker/output/${archive_name}.sha256"
+            echo "artifact_name=sdcard-${safe_ref}"
+          } >> "${GITHUB_OUTPUT}"
+
+      - name: Upload workflow artifact
+        if: github.event_name == 'workflow_dispatch'
+        uses: actions/upload-artifact@v7
+        with:
+          name: ${{ steps.package.outputs.artifact_name }}
+          path: |
+            ${{ steps.package.outputs.archive }}
+            ${{ steps.package.outputs.checksum }}
+          if-no-files-found: error
+          compression-level: 0
+          retention-days: 7
 
       - name: Release
         if: startsWith(github.ref, 'refs/tags/')
-        uses: softprops/action-gh-release@v2
+        uses: softprops/action-gh-release@v3
         with:
-          files: ${{ steps.package.outputs.archive }}
+          files: |
+            ${{ steps.package.outputs.archive }}
+            ${{ steps.package.outputs.checksum }}
