@@ -1,0 +1,30 @@
+dist:
+  module: github.com/open-telemetry/opentelemetry-collector-contrib/cmd/otelarmv7col
+  name: otelarmv7col
+  description: Minimal OpenTelemetry Collector for Linux ARMv7.
+  version: 0.158.0-dev
+  output_path: ./generated
+
+extensions:
+  - gomod: github.com/open-telemetry/opentelemetry-collector-contrib/extension/storage/filestorage v0.158.0
+  - gomod: github.com/open-telemetry/opentelemetry-collector-contrib/extension/basicauthextension v0.158.0
+
+receivers:
+  - gomod: github.com/open-telemetry/opentelemetry-collector-contrib/receiver/filelogreceiver v0.158.0
+  - gomod: github.com/open-telemetry/opentelemetry-collector-contrib/receiver/hostmetricsreceiver v0.158.0
+
+processors:
+  - gomod: github.com/open-telemetry/opentelemetry-collector-contrib/processor/attributesprocessor v0.158.0
+  - gomod: go.opentelemetry.io/collector/processor/batchprocessor v0.158.0
+  - gomod: go.opentelemetry.io/collector/processor/memorylimiterprocessor v0.158.0
+
+exporters:
+  - gomod: go.opentelemetry.io/collector/exporter/otlphttpexporter v0.158.0
+
+providers:
+  - gomod: go.opentelemetry.io/collector/confmap/provider/envprovider v1.64.0
+  - gomod: go.opentelemetry.io/collector/confmap/provider/fileprovider v1.64.0
+
+# Local module replacements are appended before this configuration is passed
+# to the OpenTelemetry Collector Builder.
+replaces:

@@ -1,0 +1,128 @@
+# Run the collector with GOMEMLIMIT=64MiB and enforce a hard RSS limit with
+# systemd/cgroup (for example, MemoryMax=96M).
+
+extensions:
+  #  file_storage:
+  #    directory: /var/lib/otelarmv7col/storage
+  #    create_directory: true
+  #    # This is a limit for each bbolt database file, not for the whole directory.
+  #    max_size: 67108864 # 64 MiB
+  #    timeout: 1s
+  #    fsync: false
+  #    compaction:
+  #      on_start: true
+  #      on_rebound: true
+  #      rebound_needed_threshold_mib: 32
+  #      rebound_trigger_threshold_mib: 8
+  #      cleanup_on_start: true
+  basicauth/caddy:
+    client_auth:
+      username: otel-ingest
+      password: piu45g89up9h834g98q34099--j0q3t4
+
+receivers:
+  hostmetrics:
+    collection_interval: 15s
+    scrapers:
+      cpu:
+      disk:
+      load:
+      filesystem:
+      memory:
+      network:
+      paging:
+      processes:
+      process:
+        mute_process_all_errors: true
+      system:
+
+  filelog:
+    include: [ /var/log/messages ]
+    start_at: end
+#    storage: file_storage
+    max_concurrent_files: 4
+    max_log_size: 64KiB
+    max_log_size_behavior: truncate
+    max_batches: 1
+    operators:
+      - type: syslog_parser
+        protocol: rfc5424
+        parse_from: body
+        parse_to: attributes
+      - type: move
+        from: attributes.message
+        to: body
+
+processors:
+  memory_limiter:
+    check_interval: 1s
+    limit_mib: 64
+    spike_limit_mib: 12
+  batch:
+    timeout: 10s
+    send_batch_size: 128
+    # send_batch_size is only a trigger; this is the actual upper bound.
+    send_batch_max_size: 256
+  attributes/device:
+    actions:
+      - key: device_mac
+        value: ${env:DEVICE_MAC}
+        action: upsert
+      - key: system
+        value: rns_gate
+        action: upsert
+
+exporters:
+  otlp_http:
+    endpoint: "https://metrics.nekoalex.dev"
+    timeout: 10s
+    auth:
+      authenticator: basicauth/caddy
+    compression: gzip
+  #    sending_queue:
+  #      enabled: true
+  #      # A persistent queue has no in-memory queue. Keep one active request and
+  #      # drop new batches when the bounded disk queue is full instead of
+  #      # accumulating backpressure in RAM.
+  #      storage: file_storage
+  #      queue_size: 64
+  #      num_consumers: 1
+  #      block_on_overflow: false
+  #    retry_on_failure:
+  #      enabled: true
+  #      initial_interval: 5s
+  #      max_interval: 30s
+  #      # The disk queue is bounded, so keep retrying queued data until it can be
+  #      # delivered. Once it is full, newly produced batches are dropped.
+  #      max_elapsed_time: 0s
+
+service:
+  extensions:
+    - basicauth/caddy
+  #    - file_storage
+  #  telemetry:
+  #    logs:
+  #      level: warn
+  #    metrics:
+  #      # Export the collector's own CPU, RSS, Go heap, queue and pipeline
+  #      # counters directly over OTLP. This does not require a Prometheus
+  #      # receiver or a self-scrape pipeline.
+  #      level: basic
+  #      readers:
+  #        - periodic:
+  #            interval: 30000 # milliseconds
+  #            timeout: 5000 # milliseconds
+  #            exporter:
+  #              otlp:
+  #                protocol: grpc
+  #                endpoint: 192.168.1.100:4317
+  #                insecure: true
+  pipelines:
+    metrics:
+      receivers: [ hostmetrics ]
+      processors: [ attributes/device, memory_limiter, batch ]
+      exporters: [ otlp_http ]
+    logs:
+      receivers: [ filelog ]
+      processors: [ attributes/device, memory_limiter, batch ]
+      exporters: [ otlp_http ]

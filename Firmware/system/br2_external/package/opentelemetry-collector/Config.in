@@ -1,0 +1,15 @@
+config BR2_PACKAGE_OPENTELEMETRY_COLLECTOR
+	bool "opentelemetry-collector (otelarmv7col)"
+	depends on BR2_USE_MMU
+	depends on BR2_PACKAGE_HOST_GO_TARGET_ARCH_SUPPORTS
+	select BR2_PACKAGE_HOST_GO
+	help
+	  Minimal OpenTelemetry Collector generated from builder-config.yaml
+	  for Linux ARMv7. The collector contains the file storage and basic
+	  authentication extensions, filelog and hostmetrics receivers, batch
+	  and memory limiter processors, the OTLP/HTTP exporter, and the env
+	  and file configuration providers.
+
+	  The installed binary is /usr/bin/otelarmv7col.
+
+	  https://github.com/open-telemetry/opentelemetry-collector-contrib
