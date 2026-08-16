@@ -4,7 +4,7 @@
 #
 ################################################################################
 
-RS_LXMF_VERSION = 053e357325f92e536f0ebbcaa43945a66c5ca3c0
+RS_LXMF_VERSION = 1f74935dc8570290877eb071e98b465f05c0de72
 RS_LXMF_SITE = https://github.com/reticulum-spb/rsLXMF
 RS_LXMF_SITE_METHOD = git
 RS_LXMF_DEPENDENCIES = host-rustc rs-reticulum

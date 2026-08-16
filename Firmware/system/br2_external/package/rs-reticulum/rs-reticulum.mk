@@ -10,7 +10,7 @@ RS_RETICULUM_SITE_METHOD = git
 RS_RETICULUM_DEPENDENCIES = host-rustc
 
 define RS_RETICULUM_USERS
-	rns -1 dialout -1 * - - - RNS User
+	rns -1 dialout -1 * - - audio,gpio RNS User
 endef
 
 define RS_RETICULUM_CREATE_SYMLINK
