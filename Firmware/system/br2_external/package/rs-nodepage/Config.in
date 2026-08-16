@@ -1,2 +1,3 @@
 config BR2_PACKAGE_RS_NODEPAGE
     bool "rsNodePage"
+    select BR2_PACKAGE_RS_RETICULUM

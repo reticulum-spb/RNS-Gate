@@ -1,3 +1,10 @@
+[storage]
+
+database_path = storage/lxmf.sqlite
+page_cache_size = 1024
+vacuum_interval = 3600
+vacuum_pages = 128
+
 [propagation]
 
 enable_node = yes

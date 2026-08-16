@@ -1,5 +1,8 @@
 config BR2_PACKAGE_RS_NOMADNET
     bool "rsNomadNet"
+    select BR2_PACKAGE_RS_RETICULUM
+    select BR2_PACKAGE_RS_LXMF
+    select BR2_PACKAGE_RS_RRC_CLIENT
     help
         An local web client compatible with NomadNet, built on the
         sibling rsReticulum, rsLXMF, rsRRC, and rsRRC-client projects.

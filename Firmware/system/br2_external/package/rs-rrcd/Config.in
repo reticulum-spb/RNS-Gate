@@ -1,4 +1,5 @@
 config BR2_PACKAGE_RS_RRCD
     bool "rsRRCD"
+    select BR2_PACKAGE_RS_RRC
 	help
         rsRRCD is a standalone RRC hub daemon (server) written in Rust
