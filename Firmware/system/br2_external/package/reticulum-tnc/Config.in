@@ -1,0 +1,10 @@
+config BR2_PACKAGE_RETICULUM_TNC
+    bool "Reticulum-TNC"
+    select BR2_PACKAGE_LIBCYAML
+    select BR2_PACKAGE_ALSA_LIB
+    select BR2_PACKAGE_FFTW
+    select BR2_PACKAGE_FFTW_DOUBLE
+    select BR2_PACKAGE_LIBGPIOD
+    select BR2_PACKAGE_LIQUID_DSP
+    help
+      Reticulum modem daemon
