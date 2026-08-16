@@ -34,26 +34,20 @@ A 3-component "tower":
 
 Web interface over IP
 
-## Сборка образа в Docker
+## Building with Docker
 
-Сборка идёт внутри контейнера, рабочее дерево Buildroot лежит в именованном
-volume `rns-gate-build`, а не на диске macOS. За счёт этого toolchain, кэш
-загрузок (`dl/`) и ccache переиспользуются между запусками — повторные сборки
-намного быстрее. Каталог сборки отдельный для каждой версии Buildroot, чтобы
-не смешивать несовместимые package stamps и host tools. На хост копируется
-только готовый `sdcard.img`.
+The build runs inside a container and the working tree is stored
+in the named volume `rns-gate-build`. This allows the toolchain, download cache
+(`dl/`), and ccache to be reused across builds.
 
 ```sh
 cd Firmware
-./docker-build.sh              # полная сборка -> docker/output/sdcard.img
-./docker-build.sh config       # сбросить .config из defconfig (быстро)
-./docker-build.sh menuconfig   # изменить и выгрузить кандидат defconfig
+./docker-build.sh              # full build -> docker/output/sdcard.img
+./docker-build.sh config       # reset .config from defconfig (fast)
+./docker-build.sh menuconfig   # edit and export a candidate defconfig
 ```
 
-`menuconfig` правит release-specific `.config` в volume и выгружает минимальный
-defconfig в `docker/output/gate_zero_defconfig`. Полная сборка всегда заново
-применяет defconfig из репозитория, поэтому экспортированный файл нужно сначала
-просмотреть и, если изменения надо закрепить, заменить им
-`system/br2_external/configs/gate_zero_defconfig`.
-
-Сбросить кэш целиком: `docker volume rm rns-gate-build`.
+`menuconfig` edits the release-specific `.config` in the volume and exports a
+minimal defconfig to `docker/output/gate_zero_defconfig`. A full build always
+reapplies the defconfig from the repository, so review the exported file first.
+To make the changes permanent, use it to replace `system/br2_external/configs/gate_zero_defconfig`.
