@@ -4,7 +4,7 @@
 #
 ################################################################################
 
-RS_RRC_CLIENT_VERSION = c31425dd3a5fd5aba66528322cfaf84d4fa8665d
+RS_RRC_CLIENT_VERSION = 5c156bef80f3f2a48bcc44137fff9c1642999974
 RS_RRC_CLIENT_SITE = https://github.com/reticulum-spb/rsRRC-client
 RS_RRC_CLIENT_SITE_METHOD = git
 RS_RRC_CLIENT_DEPENDENCIES = rs-rrc

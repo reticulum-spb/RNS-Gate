@@ -4,7 +4,7 @@
 #
 ################################################################################
 
-RS_RRCD_VERSION = ab114e086cd9bf7d7b96fa780efcd393b05c7a17
+RS_RRCD_VERSION = bedd165aa8f53d4772069afd6b358e931528bda2
 RS_RRCD_SITE = https://github.com/reticulum-spb/rsRRCD
 RS_RRCD_SITE_METHOD = git
 RS_RRCD_DEPENDENCIES = rs-rrc rs-reticulum
@@ -33,7 +33,7 @@ RS_RRCD_CARGO_ENV = \
 
 define RS_RRCD_BUILD_CMDS
     cd $(@D) && \
-    $(TARGET_MAKE_ENV) $(TARGET_CONFIGURE_OPTS) $(RS_RRCD_CARGO_ENV) cargo build --release
+    $(TARGET_MAKE_ENV) $(TARGET_CONFIGURE_OPTS) $(RS_RRCD_CARGO_ENV) cargo build --release --no-default-features --features=reticulum-client
 endef
 
 define RS_RRCD_INSTALL_TARGET_CMDS

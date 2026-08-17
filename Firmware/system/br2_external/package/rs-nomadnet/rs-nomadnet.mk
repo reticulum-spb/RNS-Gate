@@ -4,7 +4,7 @@
 #
 ################################################################################
 
-RS_NOMADNET_VERSION = 8639fabf243e57623bed4a9d6ba40def043da245
+RS_NOMADNET_VERSION = 16ba407d5ed973123fa9aae076c9304a21f49d36
 RS_NOMADNET_SITE = https://github.com/reticulum-spb/rsNomadNet
 RS_NOMADNET_SITE_METHOD = git
 RS_NOMADNET_DEPENDENCIES = rs-reticulum rs-lxmf rs-rrc-client
@@ -33,7 +33,7 @@ RS_NOMADNET_CARGO_ENV = \
 
 define RS_NOMADNET_BUILD_CMDS
     cd $(@D) && \
-    $(TARGET_MAKE_ENV) $(TARGET_CONFIGURE_OPTS) $(RS_NOMADNET_CARGO_ENV) cargo build --release
+    $(TARGET_MAKE_ENV) $(TARGET_CONFIGURE_OPTS) $(RS_NOMADNET_CARGO_ENV) cargo build --release --no-default-features --features=reticulum-client
 endef
 
 define RS_NOMADNET_INSTALL_TARGET_CMDS
