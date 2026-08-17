@@ -5,6 +5,11 @@ enable_transport = Yes
 share_instance = Yes
 instance_name = default
 
+[api]
+port = 8080
+user = admin
+password = admin
+
 [logging]
 loglevel = 4
 

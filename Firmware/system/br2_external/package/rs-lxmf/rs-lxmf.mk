@@ -4,7 +4,7 @@
 #
 ################################################################################
 
-RS_LXMF_VERSION = 3cbd0b19c626d8ab1bb9aa00c61e12a08f786e44
+RS_LXMF_VERSION = 08e401263d6007e0cd255d39d83cea193a3af6af
 RS_LXMF_SITE = https://github.com/reticulum-spb/rsLXMF
 RS_LXMF_SITE_METHOD = git
 RS_LXMF_DEPENDENCIES = host-rustc rs-reticulum
@@ -39,7 +39,7 @@ RS_LXMF_POST_EXTRACT_HOOKS += RS_LXMF_CREATE_SYMLINK
 
 define RS_LXMF_BUILD_CMDS
     cd $(@D) && \
-    $(TARGET_MAKE_ENV) $(TARGET_CONFIGURE_OPTS) $(RS_LXMF_CARGO_ENV) cargo build --release
+    $(TARGET_MAKE_ENV) $(TARGET_CONFIGURE_OPTS) $(RS_LXMF_CARGO_ENV) cargo build --release --no-default-features --features=sqlite-bundled,reticulum-client
 endef
 
 define RS_LXMF_INSTALL_TARGET_CMDS

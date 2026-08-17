@@ -4,7 +4,7 @@
 #
 ################################################################################
 
-RS_NODEPAGE_VERSION = 02ce873d12400ecb4d1e08db4274314f2239dcfa
+RS_NODEPAGE_VERSION = 90c78bfe317963beb4e8ce9bdbb8a89cca169898
 RS_NODEPAGE_SITE = https://github.com/reticulum-spb/rsNodePage
 RS_NODEPAGE_SITE_METHOD = git
 RS_NODEPAGE_DEPENDENCIES = host-rustc rs-reticulum
@@ -33,7 +33,7 @@ RS_NODEPAGE_CARGO_ENV = \
 
 define RS_NODEPAGE_BUILD_CMDS
     cd $(@D) && \
-    $(TARGET_MAKE_ENV) $(TARGET_CONFIGURE_OPTS) $(RS_NODEPAGE_CARGO_ENV) cargo build --release
+    $(TARGET_MAKE_ENV) $(TARGET_CONFIGURE_OPTS) $(RS_NODEPAGE_CARGO_ENV) cargo build --release --no-default-features --features=reticulum-client
 endef
 
 define RS_NODEPAGE_INSTALL_TARGET_CMDS
