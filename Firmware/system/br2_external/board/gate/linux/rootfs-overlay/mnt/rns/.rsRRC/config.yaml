@@ -1,0 +1,4 @@
+hub:
+  hub_name: RNS-Gate RRC hub
+  greeting: Welcome to the RNS-Gate RRC hub
+  announce_period_s: 600

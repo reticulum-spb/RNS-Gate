@@ -4,7 +4,7 @@
 #
 ################################################################################
 
-RS_NODEPAGE_VERSION = 90c78bfe317963beb4e8ce9bdbb8a89cca169898
+RS_NODEPAGE_VERSION = 2dc810f00dbcd5918c67321b955ab01be85d82a5
 RS_NODEPAGE_SITE = https://github.com/reticulum-spb/rsNodePage
 RS_NODEPAGE_SITE_METHOD = git
 RS_NODEPAGE_DEPENDENCIES = host-rustc rs-reticulum

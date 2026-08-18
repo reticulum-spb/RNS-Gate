@@ -1,0 +1,40 @@
+reticulum:
+  share_instance: true
+  shared_instance_type: tcp
+  shared_instance_port: 37428
+  instance_control_port: 37429
+  enable_transport: true
+
+api:
+  port: 8080
+  user: admin
+  password: admin
+
+logging:
+  level: 4
+  timestamps: true
+
+interfaces:
+  - type: tcp_server
+    name: TCP Server Interface
+    enabled: true
+    listen_ip: 0.0.0.0
+    listen_port: 4242
+
+  - type: tcp_client
+    name: Border TCP
+    enabled: true
+    target_host: 78.37.8.219
+    target_port: 2397
+
+  - type: rnode
+    name: SPI Lora
+    enabled: true
+    port: tcp://127.0.0.1
+    frequency: 868672500
+    tx_power: 28
+    spreading_factor: 8
+    coding_rate: 7
+    bandwidth: 62500
+    mode: gateway
+    announce_cap: 2
