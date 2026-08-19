@@ -1,0 +1,6 @@
+config BR2_PACKAGE_RS_RETICULUM_SX1262
+    bool "rsReticulum SX1262 plugin"
+    select BR2_PACKAGE_LIBCYAML
+    select BR2_PACKAGE_LIBGPIOD
+    help
+      rsReticulum SX1262 plugin

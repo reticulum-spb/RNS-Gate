@@ -27,14 +27,27 @@ interfaces:
     target_host: 78.37.8.219
     target_port: 2397
 
-  - type: rnode
+  - type: plugin
     name: SPI Lora
     enabled: true
-    port: tcp://127.0.0.1
-    frequency: 868672500
-    tx_power: 28
-    spreading_factor: 8
-    coding_rate: 7
-    bandwidth: 62500
-    mode: gateway
-    announce_cap: 2
+    plugin: sx1262
+    mtu: 500
+    announce_cap: 10
+    config:
+      spi: /dev/spidev1.0
+      cs:    { port: 0, pin: 13 }
+      rst:   { port: 0, pin: 6 }
+      busy:  { port: 0, pin: 11 }
+      dio1:  { port: 0, pin: 12 }
+      rx_en: { port: 0, pin: 2 }
+      tx_en: { port: 0, pin: 18 }
+      frequency: 868672500
+      bandwidth: 62500
+      spreading_factor: 8
+      coding_rate: 7
+      tx_power: 28
+      preamble_symbols: 25
+      sync_word: 5156 # 0x1424
+      tcxo_voltage: 1.8
+      irq_watchdog_seconds: 60
+      hard_reset_after: 2
