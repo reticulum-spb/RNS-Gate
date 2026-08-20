@@ -35,6 +35,7 @@ receivers:
       process:
         mute_process_all_errors: true
       system:
+      hardware:
 
   filelog:
     include: [ /var/log/messages ]
@@ -56,12 +57,11 @@ receivers:
 processors:
   memory_limiter:
     check_interval: 1s
-    limit_mib: 64
+    limit_mib: 32
     spike_limit_mib: 12
   batch:
     timeout: 10s
     send_batch_size: 128
-    # send_batch_size is only a trigger; this is the actual upper bound.
     send_batch_max_size: 256
   attributes/device:
     actions:

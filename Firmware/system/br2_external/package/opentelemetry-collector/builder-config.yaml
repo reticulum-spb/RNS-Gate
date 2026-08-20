@@ -28,3 +28,4 @@ providers:
 # Local module replacements are appended before this configuration is passed
 # to the OpenTelemetry Collector Builder.
 replaces:
+  - github.com/open-telemetry/opentelemetry-collector-contrib/receiver/hostmetricsreceiver => github.com/highload-zone/opentelemetry-collector-contrib/receiver/hostmetricsreceiver v0.0.0-20260817211205-f0456a63d28b

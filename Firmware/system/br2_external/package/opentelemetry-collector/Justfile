@@ -3,5 +3,5 @@ prepare-env:
     chmod +x ocb
 
 generate:
-    nix shell nixpkgs#go
-    ./ocb --skip-compilation --config builder-config.yaml
+    nix shell nixpkgs#go --command \
+      ./ocb --skip-compilation --config builder-config.yaml
