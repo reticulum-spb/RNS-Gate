@@ -4,7 +4,7 @@
 #
 ################################################################################
 
-RS_RRCD_VERSION = bedd165aa8f53d4772069afd6b358e931528bda2
+RS_RRCD_VERSION = baaa85d0bb7c601beed45b3fdefaccc7ee6c5ec1
 RS_RRCD_SITE = https://github.com/reticulum-spb/rsRRCD
 RS_RRCD_SITE_METHOD = git
 RS_RRCD_DEPENDENCIES = rs-rrc rs-reticulum

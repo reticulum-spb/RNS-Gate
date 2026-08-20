@@ -1,0 +1,53 @@
+reticulum:
+  share_instance: true
+  shared_instance_type: tcp
+  shared_instance_port: 37428
+  instance_control_port: 37429
+  enable_transport: true
+
+api:
+  port: 8080
+  user: admin
+  password: admin
+
+logging:
+  level: 4
+  timestamps: true
+
+interfaces:
+  - type: tcp_server
+    name: TCP Server Interface
+    enabled: true
+    listen_ip: 0.0.0.0
+    listen_port: 4242
+
+  - type: tcp_client
+    name: Border TCP
+    enabled: true
+    target_host: 78.37.8.219
+    target_port: 2397
+
+  - type: plugin
+    name: SPI Lora
+    enabled: true
+    plugin: sx1262
+    mtu: 500
+    announce_cap: 10
+    config:
+      spi: /dev/spidev1.0
+      cs:    { port: 0, pin: 13 }
+      rst:   { port: 0, pin: 6 }
+      busy:  { port: 0, pin: 11 }
+      dio1:  { port: 0, pin: 12 }
+      rx_en: { port: 0, pin: 2 }
+      tx_en: { port: 0, pin: 18 }
+      frequency: 868672500
+      bandwidth: 62500
+      spreading_factor: 8
+      coding_rate: 7
+      tx_power: 28
+      preamble_symbols: 25
+      sync_word: 5156 # 0x1424
+      tcxo_voltage: 1.8
+      irq_watchdog_seconds: 60
+      hard_reset_after: 2

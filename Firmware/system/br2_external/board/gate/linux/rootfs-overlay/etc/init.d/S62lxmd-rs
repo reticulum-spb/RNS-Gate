@@ -10,7 +10,7 @@ PIDFILE="/var/run/$NAME.pid"
 
 start() {
 	printf "Waiting RNSD..."
-	while ! netstat -ln | grep -q ":4242"; do
+	while ! netstat -ln | grep -q ":37428"; do
 	    sleep 0.5
 	done
 	echo "OK"

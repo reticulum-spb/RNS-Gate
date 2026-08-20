@@ -1,0 +1,23 @@
+storage:
+  database_path: storage/lxmf.sqlite
+  page_cache_size: 1024
+  vacuum_interval: 3600
+  vacuum_pages: 128
+
+propagation:
+  enable_node: true
+  node_name: RNS-Gate Propagation Node
+  announce_interval: 3600
+  announce_at_start: true
+  autopeer: true
+  autopeer_maxdepth: 6
+  auth_required: false
+
+lxmf:
+  display_name: RNS-Gate Peer
+  announce_at_start: true
+  announce_interval: 3600
+  delivery_transfer_max_accepted_size: 1000
+
+logging:
+  level: 4

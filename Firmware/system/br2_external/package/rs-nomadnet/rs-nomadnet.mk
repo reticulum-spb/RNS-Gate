@@ -7,7 +7,7 @@
 RS_NOMADNET_VERSION = 16ba407d5ed973123fa9aae076c9304a21f49d36
 RS_NOMADNET_SITE = https://github.com/reticulum-spb/rsNomadNet
 RS_NOMADNET_SITE_METHOD = git
-RS_NOMADNET_DEPENDENCIES = rs-reticulum rs-lxmf rs-rrc-client
+RS_NOMADNET_DEPENDENCIES = rs-reticulum rs-lxmf rs-rrc rs-rrc-client
 
 RS_NOMADNET_CARGO_ENV = \
     CARGO_HOME=$(DL_DIR)/br-cargo-home \
