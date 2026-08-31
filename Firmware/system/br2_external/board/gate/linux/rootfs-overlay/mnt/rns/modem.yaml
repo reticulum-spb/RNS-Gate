@@ -1,0 +1,350 @@
+hardware:
+  audio_device: hw:0,0
+  sample_rate_hz: 48000
+  period_ms: 10
+  periods: 4
+  io_timeout_ms: 2000
+  ptt:
+    port: 0
+    pin: 7
+    active_high: true
+
+profiles:
+  # FEC mode: 0=NONE (tests), 1=ROBUST TC128 rate 1/2,
+  #           2=NORMAL punctured TC128 rate 2/3.
+  - id: 0
+    name: bpsk_1200_1_8
+    modulation: bpsk
+    symbol_rate_baud: 1200
+    carrier_hz: 1650.0
+    rrc_rolloff: 0.25
+    acquisition_threshold: 0.70
+    training_threshold: 0.55
+    detector_bandwidth_margin: 1.35
+    fec_mode: 1
+    payload_class_bytes: 8
+  - id: 1
+    name: bpsk_1200_1_64
+    modulation: bpsk
+    symbol_rate_baud: 1200
+    carrier_hz: 1650.0
+    rrc_rolloff: 0.25
+    acquisition_threshold: 0.70
+    training_threshold: 0.55
+    detector_bandwidth_margin: 1.35
+    fec_mode: 1
+    payload_class_bytes: 64
+  - id: 2
+    name: qpsk_1200_1_64
+    modulation: qpsk
+    symbol_rate_baud: 1200
+    carrier_hz: 1650.0
+    rrc_rolloff: 0.25
+    acquisition_threshold: 0.70
+    training_threshold: 0.55
+    detector_bandwidth_margin: 1.35
+    fec_mode: 1
+    payload_class_bytes: 64
+  - id: 3
+    name: qpsk_1600_1_64
+    modulation: qpsk
+    symbol_rate_baud: 1600
+    carrier_hz: 1650.0
+    rrc_rolloff: 0.25
+    acquisition_threshold: 0.70
+    training_threshold: 0.55
+    detector_bandwidth_margin: 1.35
+    fec_mode: 1
+    payload_class_bytes: 64
+  - id: 4
+    name: qpsk_1600_1_128
+    modulation: qpsk
+    symbol_rate_baud: 1600
+    carrier_hz: 1650.0
+    rrc_rolloff: 0.25
+    acquisition_threshold: 0.70
+    training_threshold: 0.55
+    detector_bandwidth_margin: 1.35
+    fec_mode: 1
+    payload_class_bytes: 128
+  - id: 5
+    name: qpsk_1600_2_64
+    modulation: qpsk
+    symbol_rate_baud: 1600
+    carrier_hz: 1650.0
+    rrc_rolloff: 0.25
+    acquisition_threshold: 0.70
+    training_threshold: 0.55
+    detector_bandwidth_margin: 1.35
+    fec_mode: 2
+    payload_class_bytes: 64
+  - id: 6
+    name: qpsk_1600_2_128
+    modulation: qpsk
+    symbol_rate_baud: 1600
+    carrier_hz: 1650.0
+    rrc_rolloff: 0.25
+    acquisition_threshold: 0.70
+    training_threshold: 0.55
+    detector_bandwidth_margin: 1.35
+    fec_mode: 2
+    payload_class_bytes: 128
+  - id: 7
+    name: qpsk1500_c1800_1_64
+    modulation: qpsk
+    symbol_rate_baud: 1500
+    carrier_hz: 1800.0
+    rrc_rolloff: 0.25
+    acquisition_threshold: 0.90
+    training_threshold: 0.70
+    detector_bandwidth_margin: 1.35
+    fec_mode: 1
+    payload_class_bytes: 64
+  - id: 8
+    name: qpsk1600_c1300_1_64
+    modulation: qpsk
+    symbol_rate_baud: 1600
+    carrier_hz: 1300.0
+    rrc_rolloff: 0.25
+    acquisition_threshold: 0.90
+    training_threshold: 0.70
+    detector_bandwidth_margin: 1.35
+    fec_mode: 1
+    payload_class_bytes: 64
+  - id: 9
+    name: qpsk1600_c1450_1_64
+    modulation: qpsk
+    symbol_rate_baud: 1600
+    carrier_hz: 1450.0
+    rrc_rolloff: 0.25
+    acquisition_threshold: 0.90
+    training_threshold: 0.70
+    detector_bandwidth_margin: 1.35
+    fec_mode: 1
+    payload_class_bytes: 64
+  - id: 10
+    name: qpsk1600_c1800_1_64
+    modulation: qpsk
+    symbol_rate_baud: 1600
+    carrier_hz: 1800.0
+    rrc_rolloff: 0.25
+    acquisition_threshold: 0.90
+    training_threshold: 0.70
+    detector_bandwidth_margin: 1.35
+    fec_mode: 1
+    payload_class_bytes: 64
+  - id: 11
+    name: qpsk_1920_1_64
+    modulation: qpsk
+    symbol_rate_baud: 1920
+    carrier_hz: 1650.0
+    rrc_rolloff: 0.25
+    acquisition_threshold: 0.70
+    training_threshold: 0.55
+    detector_bandwidth_margin: 1.35
+    fec_mode: 1
+    payload_class_bytes: 64
+  - id: 12
+    name: qpsk_2000_1_64
+    modulation: qpsk
+    symbol_rate_baud: 2000
+    carrier_hz: 1650.0
+    rrc_rolloff: 0.25
+    acquisition_threshold: 0.70
+    training_threshold: 0.55
+    detector_bandwidth_margin: 1.35
+    fec_mode: 1
+    payload_class_bytes: 64
+  - id: 13
+    name: qpsk_2400_1_64
+    modulation: qpsk
+    symbol_rate_baud: 2400
+    carrier_hz: 1650.0
+    rrc_rolloff: 0.25
+    acquisition_threshold: 0.70
+    training_threshold: 0.55
+    detector_bandwidth_margin: 1.35
+    fec_mode: 1
+    payload_class_bytes: 64
+
+  - id: 14
+    name: qpsk_800_1_64
+    modulation: qpsk
+    symbol_rate_baud: 800
+    carrier_hz: 1650.0
+    rrc_rolloff: 0.25
+    acquisition_threshold: 0.90
+    training_threshold: 0.70
+    detector_bandwidth_margin: 1.35
+    fec_mode: 1
+    payload_class_bytes: 64
+  - id: 15
+    name: 8psk_600_1_64
+    modulation: 8psk
+    symbol_rate_baud: 600
+    carrier_hz: 1650.0
+    rrc_rolloff: 0.25
+    acquisition_threshold: 0.90
+    training_threshold: 0.70
+    detector_bandwidth_margin: 1.35
+    fec_mode: 1
+    payload_class_bytes: 64
+  - id: 16
+    name: 8psk_800_1_64
+    modulation: 8psk
+    symbol_rate_baud: 800
+    carrier_hz: 1650.0
+    rrc_rolloff: 0.25
+    acquisition_threshold: 0.90
+    training_threshold: 0.70
+    detector_bandwidth_margin: 1.35
+    fec_mode: 1
+    payload_class_bytes: 64
+  # Fast good-channel profile measured over the two-handheld audio path.
+  - id: 17
+    name: turbo
+    modulation: 8psk
+    symbol_rate_baud: 1000
+    carrier_hz: 1650.0
+    rrc_rolloff: 0.25
+    acquisition_threshold: 0.90
+    training_threshold: 0.70
+    detector_bandwidth_margin: 1.35
+    fec_mode: 1
+    payload_class_bytes: 64
+  - id: 18
+    name: 8psk_1000_1_128
+    modulation: 8psk
+    symbol_rate_baud: 1000
+    carrier_hz: 1650.0
+    rrc_rolloff: 0.25
+    acquisition_threshold: 0.70
+    training_threshold: 0.55
+    detector_bandwidth_margin: 1.35
+    fec_mode: 1
+    payload_class_bytes: 128
+  # Experimental equal-raw-rate comparison with turbo (3000 bit/s).
+  - id: 19
+    name: 16psk750_exp
+    modulation: 16psk
+    symbol_rate_baud: 750
+    carrier_hz: 1650.0
+    rrc_rolloff: 0.25
+    acquisition_threshold: 0.90
+    training_threshold: 0.70
+    detector_bandwidth_margin: 1.35
+    fec_mode: 1
+    payload_class_bytes: 64
+  # Experimental maximum-rate candidate (4000 bit/s raw).
+  - id: 20
+    name: 16psk1000_exp
+    modulation: 16psk
+    symbol_rate_baud: 1000
+    carrier_hz: 1650.0
+    rrc_rolloff: 0.25
+    acquisition_threshold: 0.90
+    training_threshold: 0.70
+    detector_bandwidth_margin: 1.35
+    fec_mode: 1
+    payload_class_bytes: 64
+  - id: 21
+    name: 8psk_1000_2_64
+    modulation: 8psk
+    symbol_rate_baud: 1000
+    carrier_hz: 1650.0
+    rrc_rolloff: 0.25
+    acquisition_threshold: 0.70
+    training_threshold: 0.55
+    detector_bandwidth_margin: 1.35
+    fec_mode: 2
+    payload_class_bytes: 64
+  - id: 22
+    name: 8psk_1000_2_128
+    modulation: 8psk
+    symbol_rate_baud: 1000
+    carrier_hz: 1650.0
+    rrc_rolloff: 0.25
+    acquisition_threshold: 0.70
+    training_threshold: 0.55
+    detector_bandwidth_margin: 1.35
+    fec_mode: 2
+    payload_class_bytes: 128
+  - id: 23
+    name: 8psk_1200_1_64
+    modulation: 8psk
+    symbol_rate_baud: 1200
+    carrier_hz: 1650.0
+    rrc_rolloff: 0.25
+    acquisition_threshold: 0.70
+    training_threshold: 0.55
+    detector_bandwidth_margin: 1.35
+    fec_mode: 1
+    payload_class_bytes: 64
+  - id: 24
+    name: 8psk_1600_1_64
+    modulation: 8psk
+    symbol_rate_baud: 1600
+    carrier_hz: 1650.0
+    rrc_rolloff: 0.25
+    acquisition_threshold: 0.70
+    training_threshold: 0.55
+    detector_bandwidth_margin: 1.35
+    fec_mode: 1
+    payload_class_bytes: 64
+  - id: 25
+    name: 8psk_1600_1_128
+    modulation: 8psk
+    symbol_rate_baud: 1600
+    carrier_hz: 1650.0
+    rrc_rolloff: 0.25
+    acquisition_threshold: 0.70
+    training_threshold: 0.55
+    detector_bandwidth_margin: 1.35
+    fec_mode: 1
+    payload_class_bytes: 128
+  - id: 26
+    name: 8psk_1600_2_128
+    modulation: 8psk
+    symbol_rate_baud: 1600
+    carrier_hz: 1650.0
+    rrc_rolloff: 0.25
+    acquisition_threshold: 0.70
+    training_threshold: 0.55
+    detector_bandwidth_margin: 1.35
+    fec_mode: 2
+    payload_class_bytes: 128
+
+tx:
+  lead_ms: 100
+  tail_ms: 100
+  filter_gain: 0.15
+  response_eq_taps: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+                     1.0,
+                     0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+
+service:
+  reassembly_timeout_ms: 10000
+  channel_busy_timeout_ms: 10000
+  persistence: 255
+  persistence_slot_ms: 100
+  dcd_release_ms: 50
+  rx_guard_ms: 150
+
+workers:
+  dsp_queue_blocks: 32
+  decode_queue_frames: 8
+  equalizer_queue_frames: 8
+  parallel_equalizer: true
+  equalizer_nice: 10
+
+detector:
+  warmup_ms: 2000
+  pretrigger_ms: 100
+  cooldown_ms: 100
+  noise_attack_ms: 1000
+  noise_release_ms: 2000
+  signal_attack_ms: 1
+  maximum_busy_ms: 2000
+  energy_open_ratio: 4.0
+  energy_close_ratio: 1.3
+  impulse_limit_ratio: 20.0

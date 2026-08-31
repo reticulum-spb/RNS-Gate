@@ -1,0 +1,8 @@
+config BR2_PACKAGE_RS_RETICULUM_MODEM
+    bool "rsReticulum alsa modem plugin"
+    select BR2_PACKAGE_LIBCYAML
+    select BR2_PACKAGE_LIBGPIOD
+    select BR2_PACKAGE_ALSA_LIB
+    select BR2_PACKAGE_LIQUID_DSP
+    help
+      rsReticulum alsa modem plugin
