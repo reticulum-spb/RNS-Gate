@@ -985,7 +985,7 @@
   (gr_line (start 209.9 55.268) (end 209.9 92.352) (layer "Edge.Cuts") (width 0.05) (tstamp aa27e172-cdde-481b-8dff-45d5385a730b))
   (gr_arc (start 206.8 50.81) (mid 208.992031 51.717969) (end 209.9 53.91) (layer "Edge.Cuts") (width 0.05) (tstamp d18aa208-60f1-41c2-a751-769463a0fcf9))
   (gr_line (start 209.9 92.352) (end 209.9 93.71) (layer "Edge.Cuts") (width 0.05) (tstamp e346aadd-790b-425b-b1b4-37ef8d89db7d))
-  (gr_text "RNS-Gate de R1CBU\nLora Multy module" (at 194.79 55.7784) (layer "F.SilkS") (tstamp aba16d24-22e0-4985-9ce8-1ef64a66d8a4)
+  (gr_text "RNS-Gate de R1CBU\nLora Multi module" (at 194.79 55.7784) (layer "F.SilkS") (tstamp aba16d24-22e0-4985-9ce8-1ef64a66d8a4)
     (effects (font (size 1 1) (thickness 0.15)))
   )
 
