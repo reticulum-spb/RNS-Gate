@@ -11,7 +11,7 @@ api:
   password: admin
 
 logging:
-  level: 4
+  level: 5
   timestamps: true
 
 interfaces:
@@ -34,18 +34,19 @@ interfaces:
     mtu: 500
     announce_cap: 10
     config:
+      chip: sx1276
       spi: /dev/spidev1.0
       cs:    { port: 0, pin: 13 }
       rst:   { port: 0, pin: 6 }
-      busy:  { port: 0, pin: 11 }
-      dio1:  { port: 0, pin: 12 }
+
+      dio0:  { port: 0, pin: 11 }
       rx_en: { port: 0, pin: 2 }
       tx_en: { port: 0, pin: 18 }
       frequency: 868672500
       bandwidth: 62500
       spreading_factor: 8
       coding_rate: 7
-      tx_power: 28
+      tx_power: 4
       preamble_symbols: 25
       sync_word: 5156 # 0x1424
       tcxo_voltage: 1.8

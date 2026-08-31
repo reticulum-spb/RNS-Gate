@@ -37,10 +37,10 @@ receivers:
       system:
       hardware:
 
-  filelog:
-    include: [ /var/log/messages ]
+  filelog/syslog:
+    include:
+      - /var/log/messages
     start_at: end
-#    storage: file_storage
     max_concurrent_files: 4
     max_log_size: 64KiB
     max_log_size_behavior: truncate
@@ -50,9 +50,36 @@ receivers:
         protocol: rfc5424
         parse_from: body
         parse_to: attributes
+
       - type: move
         from: attributes.message
         to: body
+
+  filelog/rns_application:
+    include:
+      - /mnt/rns/.rsReticulum/logfile
+    start_at: end
+    max_concurrent_files: 4
+    max_log_size: 64KiB
+    max_log_size_behavior: truncate
+    max_batches: 1
+    operators:
+      - type: regex_parser
+        id: parse_rns_log
+        parse_from: body
+        parse_to: attributes
+        regex: '^(?P<timestamp>\S+)\s+(?P<severity_text>\w+)\s+(?P<appname>.+?):\s+(?P<message>.*)$'
+
+        timestamp:
+          parse_from: attributes.timestamp
+          layout: '%Y-%m-%dT%H:%M:%S.%LZ'
+
+      - type: move
+        from: attributes.message
+        to: body
+
+      - type: severity_parser
+        parse_from: attributes.severity_text
 
 processors:
   memory_limiter:
@@ -123,6 +150,6 @@ service:
       processors: [ attributes/device, memory_limiter, batch ]
       exporters: [ otlp_http ]
     logs:
-      receivers: [ filelog ]
+      receivers: [ filelog/syslog, filelog/rns_application ]
       processors: [ attributes/device, memory_limiter, batch ]
       exporters: [ otlp_http ]
