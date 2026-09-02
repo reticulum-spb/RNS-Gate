@@ -4,7 +4,7 @@
 #
 ################################################################################
 
-RS_RETICULUM_SX1262_VERSION = 8c840a15028702f9bb258ebec7716508846587d5
+RS_RETICULUM_SX1262_VERSION = c9236e17692070b351fd79c8ac03a8c999bd5619
 RS_RETICULUM_SX1262_SITE = https://github.com/reticulum-spb/rsReticulum-sx1262.git
 RS_RETICULUM_SX1262_SITE_METHOD = git
 RS_RETICULUM_SX1262_LICENSE = GPLv2
