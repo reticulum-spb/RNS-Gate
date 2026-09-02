@@ -34,12 +34,11 @@ interfaces:
     mtu: 500
     announce_cap: 10
     config:
-      chip: sx1276
       spi: /dev/spidev1.0
       cs:    { port: 0, pin: 13 }
       rst:   { port: 0, pin: 6 }
-
-      dio0:  { port: 0, pin: 11 }
+      busy:  { port: 0, pin: 11 }
+      dio1:  { port: 0, pin: 12 }
       rx_en: { port: 0, pin: 2 }
       tx_en: { port: 0, pin: 18 }
       frequency: 868672500
