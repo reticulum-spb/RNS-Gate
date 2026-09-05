@@ -6,8 +6,15 @@
 #include <dt-bindings/input/input.h>
 
 / {
-	model = "RNS Gate (Orange Pi Zero)";
-	compatible = "xunlong,orangepi-zero", "allwinner,sun8i-h2-plus";
+	model = "RNS Gate (Orange Pi Zero, H2+/H3)";
+	/*
+	 * The Orange Pi Zero ships with either an H2+ or an H3. Both are the
+	 * same die (the H2+ only has 4K HDMI and the GbE MAC fused off), so
+	 * one DTB covers both: sun8i-h3.dtsi describes the peripherals and
+	 * both SoC compatibles are listed for machine matching.
+	 */
+	compatible = "xunlong,orangepi-zero", "allwinner,sun8i-h2-plus",
+		     "allwinner,sun8i-h3";
 
 	aliases {
 		serial0 = &uart0;

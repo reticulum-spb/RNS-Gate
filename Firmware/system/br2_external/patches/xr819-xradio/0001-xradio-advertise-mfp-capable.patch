@@ -1,0 +1,42 @@
+From 93f8adcbffb7d01b74b9d3ce9aed90497fe86922 Mon Sep 17 00:00:00 2001
+From: Mayur Panchal <mayur@canva.com>
+Date: Tue, 1 Sep 2026 15:52:41 +1200
+Subject: [PATCH] xradio: advertise management frame protection support
+
+The XR819 driver does not advertise MFP_CAPABLE, which prevents
+mac80211 from exposing the management frame cipher suites required
+for Protected Management Frames (802.11w).
+
+On networks where PMF is required, association starts but
+wpa_supplicant fails while installing the IGTK:
+
+  key setting validation failed
+  WPA: Failed to configure IGTK to the driver
+  RSN: Failed to configure IGTK
+
+Advertise MFP_CAPABLE so mac80211 can provide the BIP/CMAC/GMAC
+management frame ciphers.
+
+Tested on an Orange Pi Zero with XR819 and Linux
+6.18.48-current-sunxi. Before this change, iw did not expose
+management frame ciphers. Afterwards it exposes CMAC, CMAC-256,
+GMAC-128, and GMAC-256, and the device remains connected to an access
+point that requires PMF.
+
+Signed-off-by: Mayur Panchal <mayur@canva.com>
+---
+ main.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/main.c b/main.c
+index a30c604..dd64ec1 100644
+--- a/main.c
++++ b/main.c
+@@ -267,6 +267,7 @@ struct ieee80211_hw *xradio_init_common(size_t hw_priv_data_len)
+ 	ieee80211_hw_set(hw, SUPPORTS_DYNAMIC_PS);
+ 	ieee80211_hw_set(hw, REPORTS_TX_ACK_STATUS);
+ 	ieee80211_hw_set(hw, CONNECTION_MONITOR);
++	ieee80211_hw_set(hw, MFP_CAPABLE);
+ 
+ /*	hw->flags = IEEE80211_HW_SIGNAL_DBM            |
+ 	            IEEE80211_HW_SUPPORTS_PS           |
