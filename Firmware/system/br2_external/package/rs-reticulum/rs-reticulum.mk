@@ -4,7 +4,7 @@
 #
 ################################################################################
 
-RS_RETICULUM_VERSION = 5870cd982a911828155aa1497fd877273fd27483
+RS_RETICULUM_VERSION = 1f76585dfc7db5d8ea0a3fce815f9fe32ade366c
 RS_RETICULUM_SITE = https://github.com/reticulum-spb/rsReticulum
 RS_RETICULUM_SITE_METHOD = git
 RS_RETICULUM_DEPENDENCIES = host-rustc
@@ -43,7 +43,7 @@ RS_RETICULUM_CARGO_ENV = \
 
 define RS_RETICULUM_BUILD_CMDS
     cd $(@D) && \
-    $(TARGET_MAKE_ENV) $(TARGET_CONFIGURE_OPTS) $(RS_RETICULUM_CARGO_ENV) cargo build --release --features "serial,rnode-tcp,api"
+    $(TARGET_MAKE_ENV) $(TARGET_CONFIGURE_OPTS) $(RS_RETICULUM_CARGO_ENV) cargo build --release --no-default-features --features "serial,rnode-tcp,api,sqlite-bundled"
 endef
 
 define RS_RETICULUM_INSTALL_TARGET_CMDS
