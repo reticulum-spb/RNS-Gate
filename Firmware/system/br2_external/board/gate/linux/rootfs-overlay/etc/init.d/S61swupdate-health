@@ -1,0 +1,31 @@
+#!/bin/sh
+
+case "$1" in
+    start)
+        (
+            sleep 60
+            while :; do
+                if pidof rnsd-rs >/dev/null 2>&1 && mountpoint -q /mnt; then
+                    slot=$(sed -n 's/.*gate.slot=\([^ ]*\).*/\1/p' /proc/cmdline)
+                    case "$slot" in
+                        A|B)
+                            fw_setenv gate_active "$slot" >/dev/null 2>&1 || true
+                            fw_setenv gate_pending >/dev/null 2>&1 || true
+                            fw_setenv gate_tries 0 >/dev/null 2>&1 || true
+                            ;;
+                    esac
+                fi
+                sleep 10
+            done
+        ) &
+        echo $! > /run/swupdate-health.pid
+        ;;
+    stop)
+        if [ -f /run/swupdate-health.pid ]; then
+            kill "$(cat /run/swupdate-health.pid)" 2>/dev/null || true
+            rm -f /run/swupdate-health.pid
+        fi
+        ;;
+    restart) "$0" stop; "$0" start ;;
+    *) echo "Usage: $0 {start|stop|restart}"; exit 1 ;;
+esac

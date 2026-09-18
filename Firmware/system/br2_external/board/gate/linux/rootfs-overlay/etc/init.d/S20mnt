@@ -2,7 +2,7 @@
 
 case "$1" in
   start)
-	fsck.fat -a /dev/mmcblk0p2
+	fsck.fat -a /dev/mmcblk0p3
 	mount /mnt
 	;;
   stop)

@@ -1,0 +1,30 @@
+software = {
+    version = "RNS-Gate";
+    hardware-compatibility = [ "RNS Gate" ];
+    stable: {
+        boot_a: {
+            images: (
+                {
+                    filename = "rootfs.ext4";
+                    device = "/dev/mmcblk0p2";
+                }
+            );
+            bootenv: {
+                gate_pending = "B";
+                gate_tries = "3";
+            }
+        };
+        boot_b: {
+            images: (
+                {
+                    filename = "rootfs.ext4";
+                    device = "/dev/mmcblk0p1";
+                }
+            );
+            bootenv: {
+                gate_pending = "A";
+                gate_tries = "3";
+            }
+        };
+    };
+}
