@@ -1,0 +1,3 @@
+CONFIG_IFUPDOWN_UDHCPC_CMD_OPTIONS="-t5 -A3 -b -R -O search -O staticroutes"
+# CONFIG_KLOGD is not set
+# CONFIG_SYSLOGD is not set
