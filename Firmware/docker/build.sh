@@ -12,7 +12,7 @@ set -euo pipefail
 
 # Buildroot release is passed in by docker-build.sh (read from config.sh) so
 # it always matches the branch; the fallback is just a safety net.
-BR_RELEASE="${BR_RELEASE:-buildroot-2026.02.1}"
+BR_RELEASE="${BR_RELEASE:-buildroot-2026.08}"
 STAGE="${1:-all}"
 
 # Buildroot stamps are not safe to reuse across releases. In particular, a
@@ -29,6 +29,12 @@ export HOME=/build          # ccache and other host state persist in the volume
 # re-fetching. Lives in the volume, so it survives across runs.
 export BR2_DL_DIR=/build/dl
 mkdir -p "${BR2_DL_DIR}"
+
+# The defconfig and the post-build/post-image scripts reference
+# $(BR2_EXTERNAL_GATE_PATH), but BR2_EXTERNAL given on the command line of one
+# make invocation is not propagated through the out-of-tree wrapper Makefile.
+# Passing it via the environment makes every make invocation pick it up.
+export BR2_EXTERNAL=/build/br2_external
 
 cd /build
 
@@ -100,5 +106,8 @@ cleanup_image_export
 cp --sparse=never -v "${IMAGE_SOURCE}" "${IMAGE_TMP}"
 mv -f -- "${IMAGE_TMP}" "${IMAGE_DEST}"
 trap - EXIT
+
+# make-rauc-bundle.sh on the host packs rootfs.ext4 into update bundles.
+cp -v "${OUTPUT_DIR}/images/rootfs.ext4" "${IMAGE_DEST%/*}/rootfs.ext4"
 
 echo ">> Done: out/sdcard.img"

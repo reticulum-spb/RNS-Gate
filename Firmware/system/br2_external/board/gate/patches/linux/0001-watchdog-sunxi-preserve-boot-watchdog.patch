@@ -1,0 +1,25 @@
+From: RNS-Gate maintainers
+Subject: [PATCH] watchdog: sunxi: preserve a watchdog started by U-Boot
+
+Gate starts the watchdog in U-Boot so a trial kernel that hangs cannot
+exhaust the A/B fallback mechanism. Let watchdog core feed a running timer
+until userspace opens it, instead of disabling it unconditionally at probe.
+The Gate bootloader uses the driver's maximum timeout of 16 seconds.
+
+--- a/drivers/watchdog/sunxi_wdt.c
++++ b/drivers/watchdog/sunxi_wdt.c
+@@ -275,7 +275,13 @@ static int sunxi_wdt_probe(struct platform_device *pdev)
+ 
+ 	watchdog_set_drvdata(&sunxi_wdt->wdt_dev, sunxi_wdt);
+ 
+-	sunxi_wdt_stop(&sunxi_wdt->wdt_dev);
++	if (readl(sunxi_wdt->wdt_base + sunxi_wdt->wdt_regs->wdt_mode) &
++	    WDT_MODE_EN) {
++		set_bit(WDOG_HW_RUNNING, &sunxi_wdt->wdt_dev.status);
++		sunxi_wdt_ping(&sunxi_wdt->wdt_dev);
++	} else {
++		sunxi_wdt_stop(&sunxi_wdt->wdt_dev);
++	}
+ 
+ 	watchdog_stop_on_reboot(&sunxi_wdt->wdt_dev);
+ 	err = devm_watchdog_register_device(dev, &sunxi_wdt->wdt_dev);
