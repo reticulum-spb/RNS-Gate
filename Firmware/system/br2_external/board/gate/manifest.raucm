@@ -1,0 +1,14 @@
+# Template manifest for RAUC update bundles. The release pipeline copies
+# rootfs.ext4 next to it, then runs:
+#   rauc bundle --cert=cert.pem --key=key.pem <content-dir> update.raucb
+# The compatible string must match [system] in the target's
+# /etc/rauc/system.conf (see rauc-system.conf).
+[update]
+compatible=RNS Gate
+version=2026.09
+
+[bundle]
+format=verity
+
+[image.rootfs]
+filename=rootfs.ext4

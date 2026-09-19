@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-BR_RELEASE="buildroot-2026.02.1"
+BR_RELEASE="buildroot-2026.08"
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 OUTPUT_DIR="${SCRIPT_DIR}/output_gate-${BR_RELEASE#buildroot-}"
 
