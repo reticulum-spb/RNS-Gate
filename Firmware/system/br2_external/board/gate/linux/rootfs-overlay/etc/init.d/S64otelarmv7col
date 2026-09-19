@@ -6,8 +6,17 @@ NAME=otelarmv7col
 DAEMON=/usr/bin/$NAME
 PIDFILE="/var/run/$NAME.pid"
 CONFIG=/etc/otelcol/config.yaml
+DEFAULTS=/mnt/rns/otel-collector.conf
+OTEL_ENABLED=0
+
+[ -r "$DEFAULTS" ] && . "$DEFAULTS"
 
 start() {
+	if [ "${OTEL_ENABLED:-0}" != "1" ]; then
+		echo "$NAME disabled"
+		return 0
+	fi
+
 	printf "Starting $NAME: "
 	DEVICE_MAC="$(cat /sys/class/net/eth0/address)"
 	export DEVICE_MAC
