@@ -26,7 +26,7 @@ Create a standalone device for access and routing within the Reticulum Network S
 
 A 3-component "tower":
 
-* Single-board computer based on Orange Pi Zero 
+* Single-board computer based on Orange Pi Zero (both the H2+ and the H3 variant — a single image boots on either)
 * Add-on board with an E22/E32 LoRa module 
 * Add-on board with an HF/VHF audio interface
 

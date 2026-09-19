@@ -11,7 +11,7 @@ api:
   password: admin
 
 logging:
-  level: 4
+  level: 5
   timestamps: true
 
 interfaces:
@@ -45,7 +45,7 @@ interfaces:
       bandwidth: 62500
       spreading_factor: 8
       coding_rate: 7
-      tx_power: 28
+      tx_power: 4
       preamble_symbols: 25
       sync_word: 5156 # 0x1424
       tcxo_voltage: 1.8
