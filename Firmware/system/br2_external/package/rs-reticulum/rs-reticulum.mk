@@ -4,7 +4,7 @@
 #
 ################################################################################
 
-RS_RETICULUM_VERSION = 1f76585dfc7db5d8ea0a3fce815f9fe32ade366c
+RS_RETICULUM_VERSION = c72bd13f005d992f9b3f0b182a94f3f67876e3a7
 RS_RETICULUM_SITE = https://github.com/reticulum-spb/rsReticulum
 RS_RETICULUM_SITE_METHOD = git
 RS_RETICULUM_DEPENDENCIES = host-rustc
@@ -43,7 +43,8 @@ RS_RETICULUM_CARGO_ENV = \
 
 define RS_RETICULUM_BUILD_CMDS
     cd $(@D) && \
-    $(TARGET_MAKE_ENV) $(TARGET_CONFIGURE_OPTS) $(RS_RETICULUM_CARGO_ENV) cargo build --release --no-default-features --features "serial,rnode-tcp,api,sqlite-bundled"
+    $(TARGET_MAKE_ENV) $(TARGET_CONFIGURE_OPTS) $(RS_RETICULUM_CARGO_ENV) cargo build --release --no-default-features --features "serial,rnode-tcp,api,sqlite-bundled,memory-profile" && \
+    $(TARGET_MAKE_ENV) $(TARGET_CONFIGURE_OPTS) $(RS_RETICULUM_CARGO_ENV) cargo build --release -p rns-examples --bin echo --no-default-features --features reticulum-client
 endef
 
 define RS_RETICULUM_INSTALL_TARGET_CMDS
@@ -55,6 +56,7 @@ define RS_RETICULUM_INSTALL_TARGET_CMDS
     $(INSTALL) -D -m 0755 $(@D)/target/$(RUSTC_TARGET_NAME)/release/rnsd-rs $(TARGET_DIR)/usr/bin/rnsd-rs
     $(INSTALL) -D -m 0755 $(@D)/target/$(RUSTC_TARGET_NAME)/release/rnsh-rs $(TARGET_DIR)/usr/bin/rnsh-rs
     $(INSTALL) -D -m 0755 $(@D)/target/$(RUSTC_TARGET_NAME)/release/rnstatus-rs $(TARGET_DIR)/usr/bin/rnstatus-rs
+    $(INSTALL) -D -m 0755 $(@D)/target/$(RUSTC_TARGET_NAME)/release/echo $(TARGET_DIR)/usr/bin/echo-rs
 endef
 
 $(eval $(generic-package))
