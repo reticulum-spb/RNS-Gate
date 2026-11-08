@@ -4,7 +4,7 @@
 #
 ################################################################################
 
-RS_RETICULUM_VERSION = c72bd13f005d992f9b3f0b182a94f3f67876e3a7
+RS_RETICULUM_VERSION = a2e6f60e1d7f7b797b987b444f4462d9f652d135
 RS_RETICULUM_SITE = https://github.com/reticulum-spb/rsReticulum
 RS_RETICULUM_SITE_METHOD = git
 RS_RETICULUM_DEPENDENCIES = host-rustc
