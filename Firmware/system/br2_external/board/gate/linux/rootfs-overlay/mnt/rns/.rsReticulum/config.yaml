@@ -27,27 +27,22 @@ interfaces:
     target_host: 78.37.8.219
     target_port: 2397
 
-  - type: plugin
+ - type: plugin
     name: SPI Lora
     enabled: true
     plugin: sx1262
     mtu: 500
     announce_cap: 10
     config:
-      spi: /dev/spidev1.0
-      cs:    { port: 0, pin: 13 }
-      rst:   { port: 0, pin: 6 }
-      busy:  { port: 0, pin: 11 }
-      dio1:  { port: 0, pin: 12 }
-      rx_en: { port: 0, pin: 2 }
-      tx_en: { port: 0, pin: 18 }
+      device: /dev/lora0
       frequency: 868672500
       bandwidth: 62500
       spreading_factor: 8
       coding_rate: 7
-      tx_power: 4
-      preamble_symbols: 25
+      tx_power: 8
+      rx_preamble_symbols: 65
+      tx_preamble_symbols: 18
       sync_word: 5156 # 0x1424
-      tcxo_voltage: 1.8
       irq_watchdog_seconds: 60
       hard_reset_after: 2
+      tx_timeout_seconds: 120

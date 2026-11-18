@@ -1,0 +1,7 @@
+config BR2_PACKAGE_SX1262_LINUX
+	bool "sx1262-linux"
+	depends on BR2_LINUX_KERNEL
+	help
+	  Raw LoRa SPI SX1262 driver with shared IRQ, GPIO expanders,
+	  packet receive queues and a global transmit queue.
+	  Requires CONFIG_MODULES, CONFIG_SPI and CONFIG_GPIOLIB.
